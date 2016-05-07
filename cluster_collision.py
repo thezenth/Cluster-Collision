@@ -53,4 +53,3 @@ while (t < rt):
     #Ex: hermite_code.particles.mass = stellar_evolution_code.particles.mass
 
 hermite_code.stop()
-#Dad doesn't understand Git
