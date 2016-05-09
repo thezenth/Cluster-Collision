@@ -9,8 +9,10 @@ def read_csv(file_name, n):
     for line in f:
         if not line.contains("id")
             id_idx = line.index(",")
-            m_idx = line.index("kg,")
-            x_idx = line.index("FIXADSNL") #Manually insert some sort of custom indexer value for x, y, z positions?
+            m_idx = line.index("M,")
+            x_idx = line.index("X,") #Manually insert some sort of custom indexer value for x, y, z positions?
+            y_idx = line.index("Y,")
+            z_idx = line.index("Z")
             ident = line[:id_idx]
             mass = line[id_idx:m_idx]
             x = line[m_idx:x_idx]
