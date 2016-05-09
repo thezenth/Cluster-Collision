@@ -1,9 +1,9 @@
 import cluster_collision
 
 sim_name = raw_input("Simulation Name: ")
-numb = int(raw_input("Number of Stars: ")) #Turn these inputs into integers at very beginning!
-time_step = int(raw_input("Timestep (Myr): "))
-total_time = int(raw_input("Total Runtime: "))
+numb = float(raw_input("Number of Stars: ")) #Turn these inputs into floats at very beginning!
+time_step = float(raw_input("Timestep (Myr): "))
+total_time = float(raw_input("Total Runtime: "))
 
 #Run simulation
 cluster_collision.do_simulation(

@@ -48,13 +48,18 @@ def do_simulation(nme, number, timestep, total_runtime):
     print ("Creating folder at output path")
     os.mkdir(outputPath) #Make folder in output folder
 
+    #f_start_name = outputPath + "/time_0.0 Myr.txt"
+    #f_start = open(f_start_name, "w")
+    #f_start.write("id,mass,x,y,z\n")
+
     print ("Begin simulation...")
     #Now it is simulation time
     while (t < rt):
         print ("Time:" + str(t))
         hermite_code.evolve_model(t) #evolve it up to that time, t
-        t += dt #increment time
     
+        t += dt
+
         print ("    Outputting to CSV")
         f_name = outputPath + "/time_" + str(t) + ".txt" #File name for csv's is like "outputPath/time_t.csv"
         f1 = open(f_name, "w") #Open file (make new one), and write to it (using "w")
