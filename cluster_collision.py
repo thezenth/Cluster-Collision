@@ -64,7 +64,7 @@ def do_simulation(nme, num_sim_1, num_sim_2, timestep, total_runtime):
 
     print ("Creating folder at output path")
     os.mkdir(outputPath) #Make folder in output folder
-
+    print ("Outputting start CSV")
     f_start_name = outputPath + "/time_0.0 Myr.txt" 
     write_csv_log(f_start_name, hermite_code.particles) #Write first CSV log at time 0.0
 
