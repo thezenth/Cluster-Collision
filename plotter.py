@@ -18,9 +18,11 @@ def read_csv(file_name, n):
             x = line[m_idx:x_idx]
             y = line[x_idx:y_idx]
             z = line[y_idx:z_idx]
-            data[line][0] = ident #Put data into the array
-            data[line][1] = mass
-            data[line][2] = x
-            data[line][3] = y
-            data[line][4] = z
+            data[line-1][0] = ident #Put data into the array
+            data[line-1][1] = mass #Line - 1 because the loop skips the first line
+            data[line-1][2] = x
+            data[line-1][3] = y
+            data[line-1][4] = z
+    return data
+    
 
