@@ -27,5 +27,5 @@ def read_csv(file_name, n):
             data[i][4] = float(z)
             i+=1
     return data
-path1 = os.path.join("~/amuse/output/Plotter_Test_3", "time_0.0.txt")
-print (read_csv(path1, 125)) #Note: File currently has to be in same fooder as .py
+
+#print (read_csv(path1, 125))
