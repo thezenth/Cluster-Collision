@@ -18,11 +18,11 @@ def write_csv_log(f_name, particle_set):
     for i in range(0,len(particle_set)): #for every particle from 0 to length-1
         part = particle_set[i] #Get specific particle
         f1.write(
-            str(i) + "," + #using num instead of id for now.
-            str(part.mass) + "," +
-            str(part.position.x) + "," +
-            str(part.position.y) + "," +
-            str(part.position.z) + 
+            str(i) + "," + #using num instead of id for now, including the "X", "Y", and "Z" as identifiers
+            str(part.mass.value_in(units.kg)) + "M," + #.value_in(units.djoarn) means getting the value in those units, and excludes the unit on the end 
+            str(part.position.x.value_in(units.m)) + "X," +
+            str(part.position.y.value_in(units.m)) + "Y," +
+            str(part.position.z.value_in(units.m)) + "Z" +
             "\n"
         ) #Write id, mass, and position (x,y,z) and include \n to ensure it goes to newline on the next entry
     f1.close()
@@ -65,19 +65,19 @@ def do_simulation(nme, num_sim_1, num_sim_2, timestep, total_runtime):
     print ("Creating folder at output path")
     os.mkdir(outputPath) #Make folder in output folder
     print ("Outputting start CSV")
-    f_start_name = outputPath + "/time_0.0 Myr.txt" 
+    f_start_name = outputPath + "/time_0.0.txt" 
     write_csv_log(f_start_name, hermite_code.particles) #Write first CSV log at time 0.0
 
     print ("Begin simulation...")
     #Now it is simulation time
-    while (t <= rt):
+    while (t < rt):
         print ("Time:" + str(t))
         hermite_code.evolve_model(t) #evolve it up to that time, t
     
         t += dt
 
         print ("    Outputting to CSV")
-        file_name = outputPath + "/time_" + str(t) + ".txt" #File name for csv's is like "outputPath/time_t.csv"
+        file_name = outputPath + "/time_" + str(t.value_in(units.Myr)) + ".txt" #File name for csv's is like "outputPath/time_t.csv"
         write_csv_log(file_name, hermite_code.particles)
 
         #Note: if you want to include SSE or SEBA codes (stellar evolution), make sure to reset the mass _after_ running that code for each step, as the mass of those stars may change due to stellar evolution
