@@ -12,17 +12,25 @@ from amuse.ic.salpeter import new_salpeter_mass_distribution
 
 
 
-def write_csv_log(f_name, particle_set):
+def write_csv_log(f_name, particle_set, mass_u=units.kg, dist_u=units.lightyear):
     f1 = open(f_name, "w") #Open file (make new one), and write to it (using "w")
     f1.write("id,mass,x,y,z\n") #Write column headers of id, mass, and position in x,y,z
+    #f1.write("___," + mass_u + )
     for i in range(0,len(particle_set)): #for every particle from 0 to length-1
         part = particle_set[i] #Get specific particle
+        
+        ident = str(i)
+        mass = str(part.mass.value_in(mass_u))
+        xpos = str(part.position.x.value_in(dist_u))
+        ypos = str(part.position.y.value_in(dist_u))
+        zpos = str(part.position.z.value_in(dist_u))
+
         f1.write(
-            str(i) + "," + #using num instead of id for now, including the "X", "Y", and "Z" as identifiers
-            str(part.mass.value_in(units.kg)) + "M," + #.value_in(units.djoarn) means getting the value in those units, and excludes the unit on the end 
-            str(part.position.x.value_in(units.m)) + "X," +
-            str(part.position.y.value_in(units.m)) + "Y," +
-            str(part.position.z.value_in(units.m)) + "Z" +
+            ident + "," + #using num instead of id for now, including the "X", "Y", and "Z" as identifiers
+            mass + "M," + #.value_in(units.djoarn) means getting the value in those units, and excludes the unit on the end 
+            xpos + "X," +
+            ypos + "Y," +
+            zpos + "Z" +
             "\n"
         ) #Write id, mass, and position (x,y,z) and include \n to ensure it goes to newline on the next entry
     f1.close()

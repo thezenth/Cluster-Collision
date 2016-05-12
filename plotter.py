@@ -51,7 +51,7 @@ def read_csv(file_name, n):
 
 path1 = "time_0.0.txt"
 
-def to_plot(plot_data, nme):
+def to_plot(plot_data, nme, dist_u="Lightyears"):
     fig = plt.figure() #basic instantiation of figure
     ax = fig.add_subplot(111, projection='3d') #make it a 3d plot
     xdata = plot_data[:,2] #grabs the 3rd "column" of numpy array
@@ -63,9 +63,9 @@ def to_plot(plot_data, nme):
     ax.scatter(xdata, ydata, zdata) #make scatter plot
 
     #Naming the axes
-    ax.set_xlabel("Meters") #<--- Meters for now, should change that eventually
-    ax.set_ylabel("Meters")
-    ax.set_zlabel("Meters")
+    ax.set_xlabel(dist_u)
+    ax.set_ylabel(dist_u)
+    ax.set_zlabel(dist_u)
 
     #Save the plot
     plt.savefig(nme) #bbox inches='tight' ensures no unessecary whitespace
@@ -73,4 +73,4 @@ def to_plot(plot_data, nme):
     plt.close()
 
 #print (read_csv(path1, 125))
-#to_plot(read_csv("time_0.0.txt", 125), "/home/noah/Desktop/test_1.png")
+to_plot(read_csv("time_0.0.txt", 125), "/home/noah/Desktop/test_1.png")
