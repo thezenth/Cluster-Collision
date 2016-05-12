@@ -10,5 +10,5 @@ os.chdir( working )
 i = 0
 for f in os.listdir("."):
     plt_data = pltr.read_csv(f, 125)
-    pltr.to_plot(plt_data, "/home/noah/Desktop/plot_" + str(i) + ".png")
+    pltr.to_plot(plt_data, "/home/noah/amuse/output/" + dir_name + "/plot_" + str(i) + ".png")
     i += 1
