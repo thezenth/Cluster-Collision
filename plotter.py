@@ -51,11 +51,17 @@ def read_csv(file_name, n):
 
 path1 = "time_0.0.txt"
 
-#def to_plot(plot_data):
-#    fig = plt.figure()
-#    ax = fig.add_subplot(111, projection='3d')
-#    ax.scatter(
-#        
-#    )
+def to_plot(plot_data):
+    fig = plt.figure()
+    ax = fig.add_subplot(111, projection='3d')
+    xdata = plot_data[:,2]
+    print (xdata)
+    ydata = plot_data[:,3]
+    print (ydata)
+    zdata = plot_data[:,4]
+    print (zdata)
+
+    ax.scatter(xdata, ydata, zdata)
 
 print (read_csv(path1, 125))
+to_plot(read_csv(path1, 125))
