@@ -51,17 +51,26 @@ def read_csv(file_name, n):
 
 path1 = "time_0.0.txt"
 
-def to_plot(plot_data):
-    fig = plt.figure()
-    ax = fig.add_subplot(111, projection='3d')
-    xdata = plot_data[:,2]
-    print (xdata)
-    ydata = plot_data[:,3]
-    print (ydata)
+def to_plot(plot_data, nme):
+    fig = plt.figure() #basic instantiation of figure
+    ax = fig.add_subplot(111, projection='3d') #make it a 3d plot
+    xdata = plot_data[:,2] #grabs the 3rd "column" of numpy array
+    #print (xdata)
+    ydata = plot_data[:,3] #grabs the 4th "column", etc. for zdata
+    #print (ydata)
     zdata = plot_data[:,4]
-    print (zdata)
+    #print (zdata)
+    ax.scatter(xdata, ydata, zdata) #make scatter plot
 
-    ax.scatter(xdata, ydata, zdata)
+    #Naming the axes
+    ax.set_xlabel("Meters") #<--- Meters for now, should change that eventually
+    ax.set_ylabel("Meters")
+    ax.set_zlabel("Meters")
 
-print (read_csv(path1, 125))
-to_plot(read_csv(path1, 125))
+    #Save the plot
+    plt.savefig(nme) #bbox inches='tight' ensures no unessecary whitespace
+    plt.show() #may have to do this for some reason?
+    plt.close()
+
+#print (read_csv(path1, 125))
+#to_plot(read_csv("time_0.0.txt", 125), "/home/noah/Desktop/test_1.png")
