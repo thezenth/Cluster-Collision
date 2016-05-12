@@ -5,19 +5,19 @@ import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
-class star:
-    def __init__(self, identifier, mss, xpos, ypos, zpos):
-        self.ID = identifier
-        self.mass = mss
-        
-        #Position
-        self.x = xpos
-        self.y = ypos
-        self.z = zpos
+#class star:
+#    def __init__(self, identifier, mss, xpos, ypos, zpos):
+#        self.ID = identifier
+#        self.mass = mss
+#        
+#        #Position
+#        self.x = xpos
+#        self.y = ypos
+#        self.z = zpos
 
 def read_csv(file_name, n):
     #ALWAYS MAKE SURE THE NUMPY.ZEROS HAS TWO SETS OF BRACKETS
-    data = [] #Make an empty list for the stars
+    data = np.zeros((n, 5)) #Make an empty list for the stars
     print (data)
     
     f = open(file_name, "r")
@@ -35,25 +35,27 @@ def read_csv(file_name, n):
             y = line[x_idx+2:y_idx]
             z = line[y_idx+2:z_idx]
 
-            new_star = star(ident, mass, x, y, z)
-            data.append(new_star)
+            #new_star = star(ident, mass, x, y, z)
+            #data.append(new_star)
 
 
-            #data[i][0] = float(ident) #Put data into the array
-            #data[i][1] = float(mass) #Line - 1 because the loop skips the first line
-            #data[i][2] = float(x)
-            #data[i][3] = float(y)
-            #data[i][4] = float(z)
+            data[i][0] = float(ident) #Put data into the array
+            data[i][1] = float(mass) #Line - 1 because the loop skips the first line
+            data[i][2] = float(x)
+            data[i][3] = float(y)
+            data[i][4] = float(z)
             i+=1
 
 
     return data
 
-#path1 = "time_0.0.txt"
+path1 = "time_0.0.txt"
 
 #def to_plot(plot_data):
 #    fig = plt.figure()
 #    ax = fig.add_subplot(111, projection='3d')
+#    ax.scatter(
+#        
+#    )
 
-
-#print (read_csv(path1, 125)[0].x)
+print (read_csv(path1, 125))
