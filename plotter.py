@@ -67,6 +67,13 @@ def to_plot(plot_data, nme, dist_u="Lightyears"):
     ax.set_ylabel(dist_u)
     ax.set_zlabel(dist_u)
 
+    allPos = np.concatenate((xdata, ydata, zdata)) #combine all position values into one array
+    print (allPos)
+    bound = np.amax(allPos) + 10 #find the furthest position, and add 10
+    ax.set_xlim([-bound, bound]) #set this bound as graph limit
+    ax.set_ylim([-bound, bound])
+    ax.set_zlim([-bound, bound])
+
     #Save the plot
     plt.savefig(nme) #bbox inches='tight' ensures no unessecary whitespace
     plt.show() #may have to do this for some reason?
