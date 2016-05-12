@@ -51,7 +51,8 @@ def read_csv(file_name, n):
 
 path1 = "time_0.0.txt"
 
-def to_plot(plot_data, nme, dist_u="Lightyears"):
+#zoom not implemented
+def to_plot(plot_data, nme, dist_u="Lightyears", zoom=0.0):
     fig = plt.figure() #basic instantiation of figure
     ax = fig.add_subplot(111, projection='3d') #make it a 3d plot
     xdata = plot_data[:,2] #grabs the 3rd "column" of numpy array
@@ -69,7 +70,8 @@ def to_plot(plot_data, nme, dist_u="Lightyears"):
 
     allPos = np.concatenate((xdata, ydata, zdata)) #combine all position values into one array
     print (allPos)
-    bound = np.amax(allPos) + 10 #find the furthest position, and add 10
+    bound = np.amax(allPos) + 5 #find the furthest position, and add 10
+
     ax.set_xlim([-bound, bound]) #set this bound as graph limit
     ax.set_ylim([-bound, bound])
     ax.set_zlim([-bound, bound])
@@ -80,4 +82,4 @@ def to_plot(plot_data, nme, dist_u="Lightyears"):
     plt.close()
 
 #print (read_csv(path1, 125))
-to_plot(read_csv("time_0.0.txt", 125), "/home/noah/Desktop/test_1.png")
+#to_plot(read_csv("time_0.0.txt", 125), "/home/noah/Desktop/test_1.png")
