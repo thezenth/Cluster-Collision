@@ -26,6 +26,9 @@ os.chdir( working )
 i = 0
 for f in os.listdir("."):
     plt_data = pltr.read_csv(f, numb_1 + numb_2) #numb_1 + numb_2 is the total number of stars
-    pltr.to_plot(plt_data, "/home/noah/amuse/output/" + dir_name + "/plot_" + sim_name + "_" + str(i) + ".png")
+    timeForName = str(f)[
+                str(f).index("_")+1:str(f).index(".txt") #the time i
+    ]
+    pltr.to_plot(plt_data, str(f)[] + timeForName + " Myr","/home/noah/amuse/output/" + dir_name + "/plot_" + sim_name + "_" + str(i) + ".png")
     i += 1
 
