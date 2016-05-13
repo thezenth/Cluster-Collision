@@ -57,5 +57,7 @@ for f in os.listdir("."):
 
 print ("Finished plots.")
     
-
+#Make movie from .png images
+cmdStr = "ffmpeg -f image2 -r 1/5 -i image%0" + str(name_num_length)  + "d.png -vcodec mpeg4 -y movie.mp4" #finds images with zero padding of length "name_num_length"
+os.system(cmdStr)
 
