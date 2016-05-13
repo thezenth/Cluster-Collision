@@ -18,7 +18,7 @@ from mpl_toolkits.mplot3d import Axes3D
 def read_csv(file_name, n):
     #ALWAYS MAKE SURE THE NUMPY.ZEROS HAS TWO SETS OF BRACKETS
     data = np.zeros((n, 5)) #Make an empty list for the stars
-    print (data)
+    #print (data)
     
     f = open(file_name, "r")
     i = 0
@@ -52,7 +52,7 @@ def read_csv(file_name, n):
 path1 = "time_0.0.txt"
 
 #zoom not implemented
-def to_plot(plot_data, nme, dist_u="Lightyears", zoom=0.0):
+def to_plot(plot_data, nme, dist_u="Lightyears", zoom=0.0, bound=20.0):
     fig = plt.figure() #basic instantiation of figure
     ax = fig.add_subplot(111, projection='3d') #make it a 3d plot
     xdata = plot_data[:,2] #grabs the 3rd "column" of numpy array
@@ -68,9 +68,9 @@ def to_plot(plot_data, nme, dist_u="Lightyears", zoom=0.0):
     ax.set_ylabel(dist_u)
     ax.set_zlabel(dist_u)
 
-    allPos = np.concatenate((xdata, ydata, zdata)) #combine all position values into one array
-    print (allPos)
-    bound = np.amax(allPos) + 5 #find the furthest position, and add 10
+    #allPos = np.concatenate((xdata, ydata, zdata)) #combine all position values into one array
+    #print (allPos)
+    #bound = np.amax(allPos) + 5 #find the furthest position, and add 10
 
     ax.set_xlim([-bound, bound]) #set this bound as graph limit
     ax.set_ylim([-bound, bound])
