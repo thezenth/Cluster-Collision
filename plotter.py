@@ -52,7 +52,7 @@ def read_csv(file_name, n):
 path1 = "time_0.0.txt"
 
 #zoom not implemented
-def to_plot(plot_data, nme, dist_u="Lightyears", zoom=0.0, bound=20.0):
+def to_plot(plot_data, nme, path, dist_u="Lightyears", zoom=0.0, bound=20.0):
     fig = plt.figure() #basic instantiation of figure
     ax = fig.add_subplot(111, projection='3d') #make it a 3d plot
     xdata = plot_data[:,2] #grabs the 3rd "column" of numpy array
@@ -76,8 +76,11 @@ def to_plot(plot_data, nme, dist_u="Lightyears", zoom=0.0, bound=20.0):
     ax.set_ylim([-bound, bound])
     ax.set_zlim([-bound, bound])
 
+    #Write title on figure
+    fig.suptitle(nme)
+
     #Save the plot
-    plt.savefig(nme) #bbox inches='tight' ensures no unessecary whitespace
+    plt.savefig(path) #bbox inches='tight' ensures no unessecary whitespace
     plt.show() #may have to do this for some reason?
     plt.close()
 
