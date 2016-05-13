@@ -40,12 +40,11 @@ for f in os.listdir("."):
     name_num = format(i, '0' + str(name_num_length) + 'd') #0nd, where n is the length of the string, and 0 means to padd with zeros
     plt_name = "/home/noah/amuse/output/" + dir_name + "/plot_" + sim_name + "_" + name_num + ".png" #ex: /home/noah/amuse/output/SimOne/plot_SimOne_0000.png
    
-    #pltr.to_plot(plt_data, plt_name)
     plt_data = pltr.read_csv(f, numb_1 + numb_2) #numb_1 + numb_2 is the total number of stars
     timeForName = str(f)[
-                str(f).index("_")+1:str(f).index(".txt") #the time i
+                str(f).index("_")+1:str(f).index(".txt") #the time, as a substring excised from the name
     ]
-    pltr.to_plot(plt_data, str(f) + timeForName + " Myr",plt_name)
+    pltr.to_plot(plt_data, timeForName + " Myr",plt_name)
 
     i += 1
     
