@@ -1,4 +1,7 @@
 import cluster_collision
+import plotter as pltr
+import os
+import sys
 
 sim_name = raw_input("Simulation Name: ")
 numb_1 = float(raw_input("Number of Stars (Cluster 1): ")) #Turn these inputs into floats at very beginning!
@@ -14,3 +17,15 @@ cluster_collision.do_simulation(
             time_step,
             total_time
         )
+
+dir_name = sim_name #raw_input("Directory: ")
+working= os.environ.get("WORKING_DIRECTORY","/home/noah/amuse/output/" + dir_name)
+if len(sys.argv) > 1: working = sys.argv[1]
+os.chdir( working )
+
+i = 0
+for f in os.listdir("."):
+    plt_data = pltr.read_csv(f, numb_1 + numb_2) #numb_1 + numb_2 is the total number of stars
+    pltr.to_plot(plt_data, "/home/noah/amuse/output/" + dir_name + "/plot_" + sim_name + "_" + str(i) + ".png")
+    i += 1
+
