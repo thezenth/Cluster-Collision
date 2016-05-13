@@ -26,14 +26,18 @@ os.chdir( working )
 
 i = 0
 name_num_length = len(
-    	str(total_time / time_step) #total_time / time_step is the number of csv files that will be generated, and then the length of this number is found, because if the highest file name will be 100, then the first file name needs to be formatted 001, if the highest file nameiwll be 20000, then the first needs to be 00001
+    	str(
+            int(round(total_time / time_step)) #first, round the float to nearest interger, then convert data type to integer
+        ) #total_time / time_step is the number of csv files that will be generated, and then the length of this number is found, because if the highest file name will be 100, then the first file name needs to be formatted 001, if the highest file nameiwll be 20000, then the first needs to be 00001
 )
+print ("NAME NUM LENGTH=" + str(name_num_length))
+print ("TOTAL/STEP=" + str(total_time/time_step))
 
 for f in os.listdir("."):
     plt_data = pltr.read_csv(f, total_num) #numb_1 + numb_2 is the total number of stars
    
     #Name funkiness
-    name_num = "{0:{1}}".format(i, name_num_length) #the string representing which iteration this file is; e.g. plot for iteration 1, 2, 3, etc.
+    name_num = format(i, '0' + str(name_num_length) + 'd') #0nd, where n is the length of the string, and 0 means to padd with zeros
     plt_name = "/home/noah/amuse/output/" + dir_name + "/plot_" + sim_name + "_" + name_num + ".png" #ex: /home/noah/amuse/output/SimOne/plot_SimOne_0000.png
    
     pltr.to_plot(plt_data, plt_name)
