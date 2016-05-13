@@ -6,6 +6,7 @@ import sys
 sim_name = raw_input("Simulation Name: ")
 numb_1 = float(raw_input("Number of Stars (Cluster 1): ")) #Turn these inputs into floats at very beginning!
 numb_2 = float(raw_input("Number of Stars (Cluster 2): "))
+total_num = numb_1 + numb_2 #total numbr of stars
 time_step = float(raw_input("Timestep (Myr): "))
 total_time = float(raw_input("Total Runtime: "))
 
@@ -24,8 +25,19 @@ if len(sys.argv) > 1: working = sys.argv[1]
 os.chdir( working )
 
 i = 0
+name_num_length = len(
+    	str(total_time / time_step) #total_time / time_step is the number of csv files that will be generated, and then the length of this number is found, because if the highest file name will be 100, then the first file name needs to be formatted 001, if the highest file nameiwll be 20000, then the first needs to be 00001
+)
+
 for f in os.listdir("."):
-    plt_data = pltr.read_csv(f, numb_1 + numb_2) #numb_1 + numb_2 is the total number of stars
-    pltr.to_plot(plt_data, "/home/noah/amuse/output/" + dir_name + "/plot_" + sim_name + "_" + str(i) + ".png")
+    plt_data = pltr.read_csv(f, total_num) #numb_1 + numb_2 is the total number of stars
+   
+    #Name funkiness
+    name_num = "{0:{1}}".format(i, name_num_length) #the string representing which iteration this file is; e.g. plot for iteration 1, 2, 3, etc.
+    plt_name = "/home/noah/amuse/output/" + dir_name + "/plot_" + sim_name + "_" + name_num + ".png" #ex: /home/noah/amuse/output/SimOne/plot_SimOne_0000.png
+   
+    pltr.to_plot(plt_data, plt_name)
     i += 1
+    
+
 
