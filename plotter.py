@@ -1,70 +1,92 @@
-from dropbox_functions import *
+import os
+import numpy as np
+
+# -- MATPLOTLIB -- #
 import matplotlib.pyplot as plt
-import matplotlib as mpl
 from mpl_toolkits.mplot3d import Axes3D
 
-# -- PLAN FOR visual_sim() -- #
-# Able to save data from simulation in a csv (comma delimted text file)
-# Then, visual_sim() is pointed to that file, maybe there is a function/lib to read it?
-# Then, simulation is made based upon this data
+#class star:
+#    def __init__(self, identifier, mss, xpos, ypos, zpos):
+#        self.ID = identifier
+#        self.mass = mss
+#        
+#        #Position
+#        self.x = xpos
+#        self.y = ypos
+#        self.z = zpos
 
-def visual_sim ()
+def read_csv(file_name, n):
+    #ALWAYS MAKE SURE THE NUMPY.ZEROS HAS TWO SETS OF BRACKETS
+    data = np.zeros((n, 5)) #Make an empty list for the stars
+    #print (data)
+    
+    #print ("Reading csv files...")
+    f = open(file_name, "r")
+    i = 0
+    for line in f:
+        if "id" not in line:
+            
+            #print ("Reading line " + str(i))
+            
+            id_idx = line.index(",")
+            m_idx = line.index("M,")
+            x_idx = line.index("X,") #Manually insert some sort of custom indexer value for x, y, z positions?
+            y_idx = line.index("Y,")
+            z_idx = line.index("Z")
+            ident = line[:id_idx]
+            mass = line[id_idx+1:m_idx]
+            x = line[m_idx+2:x_idx]
+            y = line[x_idx+2:y_idx]
+            z = line[y_idx+2:z_idx]
 
-def make3dPlot ( name, t, saveFolder, xData, yData, zData, limits, clrs = None ):
-	print ("Creating 3D plot...")
+            #new_star = star(ident, mass, x, y, z)
+            #data.append(new_star)
 
-	print ( "	Initializing Figure..."  )
-	fig = plt.figure()
-	
-	print ( "	Making 3D Axes..." )
-	ax = fig.add_subplot(111, projection='3d')
-	ax.set_title("Positions - " + t + " myr")
 
-	if limits is not None:
-		ax.set_xlim3d( [ limits[0], limits[1] ] )
-		ax.set_ylim3d( [ limits[2], limits[3] ] )
-		ax.set_zlim3d( [ limits[4], limits[5] ] )
-		ax.set_autoscale_on(False)
+            data[i][0] = float(ident) #Put data into the array
+            data[i][1] = float(mass) #Line - 1 because the loop skips the first line
+            data[i][2] = float(x)
+            data[i][3] = float(y)
+            data[i][4] = float(z)
+            i+=1
 
-	print ( "	Plotting Data...")
-	if clrs is not None:
-		print ("		Coloring...")
-		#colors = ['red', 'blue']
-		#levels = [0, 1]
+    #print ("Done reading.")
+    return data
 
-		#cmap, norm = mpl.colors.from_levels_and_colors(levels=levels, colors=colors, extend='max')
+path1 = "time_0.0.txt"
 
-		#ax.scatter(x,y,c=z, s=150, marker='<', edgecolor='none', cmap=cmap, norm=norm)
-		ax.scatter( xData, yData, zData, c=clrs)
-	else:
-		ax.scatter ( xData, yData, zData ) 
-	
-	print ("	Saving Figure...")
+#zoom not implemented
+def to_plot(plot_data, nme, path, dist_u="Lightyears", zoom=0.0, bound=20.0):
+    fig = plt.figure() #basic instantiation of figure
+    ax = fig.add_subplot(111, projection='3d') #make it a 3d plot
+    xdata = plot_data[:,2] #grabs the 3rd "column" of numpy array
+    #print (xdata)
+    ydata = plot_data[:,3] #grabs the 4th "column", etc. for zdata
+    #print (ydata)
+    zdata = plot_data[:,4]
+    #print (zdata)
+    ax.scatter(xdata, ydata, zdata) #make scatter plot
 
-	if ".png" not in name:
-		name = name + ".png"
-	print ("POS NAME = " + name)
-	plt.savefig(name)
+    #Naming the axes
+    ax.set_xlabel(dist_u)
+    ax.set_ylabel(dist_u)
+    ax.set_zlabel(dist_u)
 
-	moveToDropbox(name, saveFolder)
+    #allPos = np.concatenate((xdata, ydata, zdata)) #combine all position values into one array
+    #print (allPos)
+    #bound = np.amax(allPos) + 5 #find the furthest position, and add 10
 
-	print ("Done Creating 3D Plot.")
+    ax.set_xlim([-bound, bound]) #set this bound as graph limit
+    ax.set_ylim([-bound, bound])
+    ax.set_zlim([-bound, bound])
 
-def HRPlot(name, t, saveFolder, xData, yData, clrs):
-        print "Plotting HR Diagram.."
-      	fig = plt.figure()
-	ax = fig.add_subplot(111)
-	ax.set_title("HR diagram - " + t + " myr" )
-	ax.set_xlabel("Effective Temperature (K)")
-	ax.set_ylabel("Luminosity (solar luminosity)")
+    #Write title on figure
+    fig.suptitle(nme)
 
-	ax.scatter( xData, yData, c=clrs )
-	ax.axis([50000, 2500., 0.00001, 1000000])
+    #Save the plot
+    plt.savefig(path) #bbox inches='tight' ensures no unessecary whitespace
+    plt.show() #may have to do this for some reason?
+    plt.close()
 
-	if ".png" not in name:
-		name = name + ".png"
-	
-	print ("NAME = " + name)
-	plt.savefig(name)
-
-	moveToDropbox(name, saveFolder)
+#print (read_csv(path1, 125))
+#to_plot(read_csv("time_0.0.txt", 125), "/home/noah/Desktop/test_1.png")
