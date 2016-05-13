@@ -20,10 +20,14 @@ def read_csv(file_name, n):
     data = np.zeros((n, 5)) #Make an empty list for the stars
     #print (data)
     
+    #print ("Reading csv files...")
     f = open(file_name, "r")
     i = 0
     for line in f:
         if "id" not in line:
+            
+            #print ("Reading line " + str(i))
+            
             id_idx = line.index(",")
             m_idx = line.index("M,")
             x_idx = line.index("X,") #Manually insert some sort of custom indexer value for x, y, z positions?
@@ -46,7 +50,7 @@ def read_csv(file_name, n):
             data[i][4] = float(z)
             i+=1
 
-
+    #print ("Done reading.")
     return data
 
 path1 = "time_0.0.txt"
