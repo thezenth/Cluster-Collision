@@ -62,5 +62,5 @@ print ("Finished plots.")
 
 #Make movie from .png images
 #avconv -r 10 -vf scale=-1:1080 -i filename_%nd.png NAME.avi
-cmdStr = "avconv -r 10 -i " + "plot_" + sim_name + "_" + "%0" + str(name_num_length) + "d.png test.avi" #finds images with zero padding of length "name_num_length"
+cmdStr = "avconv -r 10 -i " + "plot_" + sim_name + "_" + "%0" + str(name_num_length) + "d.png -vf scale=-1:1080 test.avi" #finds images with zero padding of length "name_num_length"
 os.system(cmdStr)
