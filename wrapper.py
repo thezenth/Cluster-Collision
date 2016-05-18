@@ -36,28 +36,29 @@ print ("TOTAL/STEP=" + str(total_time/time_step))
 print ("Creating plots...")
 
 for f in os.listdir("."):
-    
+
     #print ("Reading csv file...")
-    
+
     plt_data = pltr.read_csv(f, total_num) #numb_1 + numb_2 is the total number of stars
-   
+
     #Name funkiness
-    
+
     #print ("Creating plot..")
-    
+
     name_num = format(i, '0' + str(name_num_length) + 'd') #0nd, where n is the length of the string, and 0 means to padd with zeros
     plt_name = "/home/noah/amuse/output/" + dir_name + "/plot_" + sim_name + "_" + name_num + ".png" #ex: /home/noah/amuse/output/SimOne/plot_SimOne_0000.png
-   
-    timeForName = str(f)[
-                str(f).index("_")+1:str(f).index(".txt") #the time, as a substring excised from the name
-    ]
+
+    timeLine = open(f, 'r').readline()
+    timeForName = timeLine[ timeLine.index("=")+1:timeLine.index("\n") ]
+
+    #str(f).index("_")+1:str(f).index(".txt") #the time, as a substring excised from the name
+
     pltr.to_plot(plt_data, timeForName + " Myr",plt_name)
 
     i += 1
 
 print ("Finished plots.")
-    
-#Make movie from .png images
-cmdStr = "ffmpeg -f image2 -r 1/5 -i " + "plot_" + sim_name + "_" + "%0" + str(name_num_length)  + "d.png -vcodec mpeg4 -y movie.mp4" #finds images with zero padding of length "name_num_length"
-os.system(cmdStr)
 
+#Make movie from .png images
+cmdStr = "avconv -i " + "plot_" + sim_name + "_" + "%0" + str(name_num_length) + "d.png -r 1/5 test.avi" #finds images with zero padding of length "name_num_length"
+os.system(cmdStr)

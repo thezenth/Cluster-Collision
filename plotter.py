@@ -9,7 +9,7 @@ from mpl_toolkits.mplot3d import Axes3D
 #    def __init__(self, identifier, mss, xpos, ypos, zpos):
 #        self.ID = identifier
 #        self.mass = mss
-#        
+#
 #        #Position
 #        self.x = xpos
 #        self.y = ypos
@@ -19,15 +19,17 @@ def read_csv(file_name, n):
     #ALWAYS MAKE SURE THE NUMPY.ZEROS HAS TWO SETS OF BRACKETS
     data = np.zeros((n, 5)) #Make an empty list for the stars
     #print (data)
-    
+
     #print ("Reading csv files...")
     f = open(file_name, "r")
     i = 0
     for line in f:
-        if "id" not in line:
-            
+        if "id" or "TIME" in line: #include id, as part of the column delimiter line, and TIME as the timestep of each csv file is defined in the very first line
+            print ("can't do this line man")
+
+        else:
             #print ("Reading line " + str(i))
-            
+
             id_idx = line.index(",")
             m_idx = line.index("M,")
             x_idx = line.index("X,") #Manually insert some sort of custom indexer value for x, y, z positions?
