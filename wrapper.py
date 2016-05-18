@@ -61,5 +61,6 @@ for f in sortedFiles:
 print ("Finished plots.")
 
 #Make movie from .png images
-cmdStr = "avconv -i " + "plot_" + sim_name + "_" + "%0" + str(name_num_length) + "d.png -r 1/5 test.avi" #finds images with zero padding of length "name_num_length"
+#avconv -r 10 -i filename_%nd.png NAME.avi
+cmdStr = "avconv -r 10 -i " + "plot_" + sim_name + "_" + "%0" + str(name_num_length) + "d.png test.avi" #finds images with zero padding of length "name_num_length"
 os.system(cmdStr)
