@@ -24,12 +24,8 @@ def read_csv(file_name, n):
     f = open(file_name, "r")
     i = 0
     for line in f:
-        if "id" or "TIME" in line: #include id, as part of the column delimiter line, and TIME as the timestep of each csv file is defined in the very first line
-            print ("can't do this line man")
-
-        else:
-            #print ("Reading line " + str(i))
-
+        if "id" not in line and "TIME" not in line: #include id, as part of the column delimiter line, and TIME as the timestep of each csv file is defined in the very first line   
+            #print ("can't do this line man")
             id_idx = line.index(",")
             m_idx = line.index("M,")
             x_idx = line.index("X,") #Manually insert some sort of custom indexer value for x, y, z positions?
@@ -43,7 +39,6 @@ def read_csv(file_name, n):
 
             #new_star = star(ident, mass, x, y, z)
             #data.append(new_star)
-
 
             data[i][0] = float(ident) #Put data into the array
             data[i][1] = float(mass) #Line - 1 because the loop skips the first line

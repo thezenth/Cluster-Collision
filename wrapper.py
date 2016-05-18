@@ -35,10 +35,11 @@ print ("TOTAL/STEP=" + str(total_time/time_step))
 
 print ("Creating plots...")
 
-for f in os.listdir("."):
+sortedFiles = sorted(os.listdir(".")) #get all the files in the directory, which should only be the .txt files
+for f in sortedFiles:
 
     #print ("Reading csv file...")
-
+    print ("FILE= " + f)
     plt_data = pltr.read_csv(f, total_num) #numb_1 + numb_2 is the total number of stars
 
     #Name funkiness
