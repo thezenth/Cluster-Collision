@@ -3,6 +3,8 @@ import plotter as pltr
 import os
 import sys
 
+import errno
+
 sim_name = raw_input("Simulation Name: ")
 numb_1 = float(raw_input("Number of Stars (Cluster 1): ")) #Turn these inputs into floats at very beginning!
 numb_2 = float(raw_input("Number of Stars (Cluster 2): "))
@@ -10,19 +12,31 @@ total_num = numb_1 + numb_2 #total numbr of stars
 time_step = float(raw_input("Timestep (Myr): "))
 total_time = float(raw_input("Total Runtime: "))
 
+print ("Creating folder at output path")
+
+outputPath = os.path.join("/home/noah/amuse_output/", sim_name)
+print "Output Path! ::: " + outputPath
+if not os.path.exists(outputPath):
+    try:
+        os.makedirs(outputPath)
+    except OSError as exc:
+        if exc.errno != errno.EEXIST:
+            raise
+        pass
+
 #Run simulation
 cluster_collision.do_simulation(
-            sim_name,
-            numb_1,
-            numb_2,
-            time_step,
-            total_time
-        )
+    sim_name,
+    numb_1,
+    numb_2,
+    time_step,
+    total_time
+)
 
-dir_name = sim_name #raw_input("Directory: ")
-working= os.environ.get("WORKING_DIRECTORY","/home/noah/amuse/output/" + dir_name)
-if len(sys.argv) > 1: working = sys.argv[1]
-os.chdir( working )
+#dir_name = sim_name #raw_input("Directory: ")
+#working = os.environ.get("WORKING_DIRECTORY","/home/noah/amuse_output/" + dir_name)
+#if len(sys.argv) > 1: working = sys.argv[1]
+#os.chdir( working )
 
 i = 0
 name_num_length = len(
@@ -47,7 +61,7 @@ for f in sortedFiles:
     #print ("Creating plot..")
 
     name_num = format(i, '0' + str(name_num_length) + 'd') #0nd, where n is the length of the string, and 0 means to padd with zeros
-    plt_name = "/home/noah/amuse/output/" + dir_name + "/plot_" + sim_name + "_" + name_num + ".png" #ex: /home/noah/amuse/output/SimOne/plot_SimOne_0000.png
+    plt_name = "/home/noah/amuse_output/" + dir_name + "/plot_" + sim_name + "_" + name_num + ".png" #ex: /home/noah/amuse/output/SimOne/plot_SimOne_0000.png
 
     timeLine = open(f, 'r').readline()
     timeForName = timeLine[ timeLine.index("=")+1:timeLine.index("\n") ]

@@ -10,10 +10,16 @@ from amuse.datamodel import Particles
 from amuse.community.hermite0.interface import Hermite
 from amuse.ic.salpeter import new_salpeter_mass_distribution
 
-
+import errno
 
 def write_csv_log(f_name, particle_set, time, mass_u=units.kg, dist_u=units.lightyear):
-    f1 = open(f_name, "w") #Open file (make new one), and write to it (using "w")
+
+    try:
+        f1 = open(f_name, 'w')
+    except IOError:
+    # If not exists, create the file
+        f1 = open(f_name, 'w+')
+
     f1.write("TIME=" + str(time) + "\n")
     f1.write("id,mass,x,y,z\n") #Write column headers of id, mass, and position in x,y,z
     #f1.write("___," + mass_u + )
@@ -34,12 +40,16 @@ def write_csv_log(f_name, particle_set, time, mass_u=units.kg, dist_u=units.ligh
             zpos + "Z" +
             "\n"
         ) #Write id, mass, and position (x,y,z) and include \n to ensure it goes to newline on the next entry
+
+    print f1.name
+
     f1.close()
 
 def do_simulation(nme, num_sim_1, num_sim_2, timestep, total_runtime):
 
     name = nme #Name of the specific simulation
-    outputPath = "output/" + name #Where the output csv files will go
+    outputPath = os.path.join("/home/noah/amuse_output/", name) #Where the output csv files will go
+    print "OTHER OUTPUT PATH ::: " + outputPath
 
     dt = timestep | units.Myr #timestep
     rt = total_runtime | units.Myr #total runtime
@@ -71,15 +81,14 @@ def do_simulation(nme, num_sim_1, num_sim_2, timestep, total_runtime):
     print ("    Adding particles")
     hermite_code.particles.add_particles(stars) #add "stars" particle set
 
-    print ("Creating folder at output path")
-    os.mkdir(outputPath) #Make folder in output folder
     print ("Outputting start CSV")
 
     i = 0
 
     name_num_length = len(str(int(round(rt.value_in(units.Myr) / dt.value_in(units.Myr)))))
     name_num = format(i, '0' + str(name_num_length) + 'd') #0nd, where n is the length of the string, and 0 means to padd with zeros
-    f_start_name = outputPath + "/csv_" + name + name_num  + ".txt" #ex: /home/noah/amuse/output/SimOne/plot_SimOne_0000.png
+    f_start_name = os.path.join(outputPath, "/csv_" + name + name_num  + ".txt") #ex: /home/noah/amuse/output/SimOne/plot_SimOne_0000.png
+    print f_start_name
     write_csv_log(f_start_name, hermite_code.particles, 0.0) #Write first CSV log at time 0.0
 
     print ("Begin simulation...")
@@ -93,7 +102,8 @@ def do_simulation(nme, num_sim_1, num_sim_2, timestep, total_runtime):
         print ("    Outputting to CSV")
 
         name_num = format(i, '0' + str(name_num_length) + 'd')
-        file_name = outputPath + "/csv_" + name + name_num + ".txt" #File name for csv's is like "outputPath/time_t.csv"
+        file_name = os.path.join(outputPath, "/csv_" + name + name_num + ".txt") #File name for csv's is like "outputPath/time_t.csv"
+        print file_name
         write_csv_log(file_name, hermite_code.particles, t.value_in(units.Myr))
 
         i += 1

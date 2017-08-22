@@ -24,7 +24,7 @@ def read_csv(file_name, n):
     f = open(file_name, "r")
     i = 0
     for line in f:
-        if "id" not in line and "TIME" not in line: #include id, as part of the column delimiter line, and TIME as the timestep of each csv file is defined in the very first line   
+        if "id" not in line and "TIME" not in line: #include id, as part of the column delimiter line, and TIME as the timestep of each csv file is defined in the very first line
             #print ("can't do this line man")
             id_idx = line.index(",")
             m_idx = line.index("M,")
