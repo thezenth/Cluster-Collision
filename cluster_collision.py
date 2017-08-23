@@ -42,6 +42,7 @@ def write_csv_log(f_name, particle_set, time, mass_u=units.kg, dist_u=units.ligh
         ) #Write id, mass, and position (x,y,z) and include \n to ensure it goes to newline on the next entry
 
     print f1.name
+    print f1
 
     f1.close()
 
@@ -87,7 +88,7 @@ def do_simulation(nme, num_sim_1, num_sim_2, timestep, total_runtime):
 
     name_num_length = len(str(int(round(rt.value_in(units.Myr) / dt.value_in(units.Myr)))))
     name_num = format(i, '0' + str(name_num_length) + 'd') #0nd, where n is the length of the string, and 0 means to padd with zeros
-    f_start_name = os.path.join(outputPath, "/csv_" + name + name_num  + ".txt") #ex: /home/noah/amuse/output/SimOne/plot_SimOne_0000.png
+    f_start_name = outputPath + "/csv_" + name + name_num  + ".txt" #ex: /home/noah/amuse/output/SimOne/plot_SimOne_0000.png
     print f_start_name
     write_csv_log(f_start_name, hermite_code.particles, 0.0) #Write first CSV log at time 0.0
 
@@ -102,7 +103,7 @@ def do_simulation(nme, num_sim_1, num_sim_2, timestep, total_runtime):
         print ("    Outputting to CSV")
 
         name_num = format(i, '0' + str(name_num_length) + 'd')
-        file_name = os.path.join(outputPath, "/csv_" + name + name_num + ".txt") #File name for csv's is like "outputPath/time_t.csv"
+        file_name = outputPath + "/csv_" + name + name_num + ".txt" #File name for csv's is like "outputPath/time_t.csv"
         print file_name
         write_csv_log(file_name, hermite_code.particles, t.value_in(units.Myr))
 

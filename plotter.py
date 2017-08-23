@@ -23,6 +23,9 @@ def read_csv(file_name, n):
     #print ("Reading csv files...")
     f = open(file_name, "r")
     i = 0
+
+    # maybe do normal for loop, begin iteration on i = 2 (line 3)?
+
     for line in f:
         if "id" not in line and "TIME" not in line: #include id, as part of the column delimiter line, and TIME as the timestep of each csv file is defined in the very first line
             #print ("can't do this line man")
